@@ -73,11 +73,11 @@ void CGameFramework::BuildObjects()
 	CAirplaneMesh* pAirplaneMesh = new CAirplaneMesh(6.0f, 6.0f, 1.0f);
 
 	m_pPlayer = new CAirplanePlayer();
-	m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
+	m_pPlayer->SetPosition(0.0f, 3.0f, 0.0f);
 	m_pPlayer->SetMesh(pAirplaneMesh);
 	m_pPlayer->SetColor(RGB(0, 0, 255));
 	m_pPlayer->SetCamera(pCamera);
-	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
+	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 10.0f, -15.0f));
 
 	m_pScene = new CScene(m_pPlayer);
 	m_pScene->BuildObjects();

@@ -21,14 +21,14 @@ void CScene::BuildObjects()
 	m_pWallsObject = new CWallsObject();
 	m_pWallsObject->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pWallsObject->SetMesh(pWallCubeMesh);
-	m_pWallsObject->SetColor(RGB(0, 1, 0));
+	m_pWallsObject->SetColor(RGB(150, 255, 150));
 	m_pWallsObject->m_pxmffloorPlanes[0] = XMFLOAT4(+1.0f, 0.0f, 0.0f, fHalfWidth);
 	m_pWallsObject->m_pxmffloorPlanes[1] = XMFLOAT4(-1.0f, 0.0f, 0.0f, fHalfWidth);		//¹Ù´Ú
 	m_pWallsObject->m_pxmffloorPlanes[2] = XMFLOAT4(0.0f, +1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[3] = XMFLOAT4(0.0f, -1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[4] = XMFLOAT4(0.0f, 0.0f, +1.0f, fHalfDepth);
 	m_pWallsObject->m_pxmffloorPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
-	m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.1f, fHalfHeight * 0.1f, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+	m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.1f, fHalfHeight, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 
