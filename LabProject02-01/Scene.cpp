@@ -15,20 +15,20 @@ void CScene::BuildObjects()
 {
 	CExplosiveObject::PrepareExplosion();
 
-	float fHalfWidth = 200.0f, fHalfHeight = 200.0f, fHalfDepth = 200.0f;
-	CWallMesh* pWallCubeMesh = new CWallMesh(fHalfWidth * 2.0f, fHalfHeight * 2.0f, fHalfDepth * 2.0f, 1);
+	float fHalfWidth = 100.0f, fHalfHeight = 100.0f, fHalfDepth = 100.0f;
+	CWallMesh* pWallCubeMesh = new CWallMesh(fHalfWidth * 2.0f, fHalfHeight * 2.0f, fHalfDepth * 2.0f, 30);
 
 	m_pWallsObject = new CWallsObject();
 	m_pWallsObject->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pWallsObject->SetMesh(pWallCubeMesh);
 	m_pWallsObject->SetColor(RGB(0, 1, 0));
 	m_pWallsObject->m_pxmffloorPlanes[0] = XMFLOAT4(+1.0f, 0.0f, 0.0f, fHalfWidth);
-	m_pWallsObject->m_pxmffloorPlanes[1] = XMFLOAT4(-1.0f, 0.0f, 0.0f, fHalfWidth);
+	m_pWallsObject->m_pxmffloorPlanes[1] = XMFLOAT4(-1.0f, 0.0f, 0.0f, fHalfWidth);		//바닥
 	m_pWallsObject->m_pxmffloorPlanes[2] = XMFLOAT4(0.0f, +1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[3] = XMFLOAT4(0.0f, -1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[4] = XMFLOAT4(0.0f, 0.0f, +1.0f, fHalfDepth);
 	m_pWallsObject->m_pxmffloorPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
-	m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth * 0.05f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+	m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.1f, fHalfHeight * 0.1f, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 
@@ -248,13 +248,14 @@ void CScene::CheckObjectByWallCollisions()
 	for (int i = 0; i < m_nObjects; i++)
 	{
 		ContainmentType containType = m_pWallsObject->m_xmOOBB.Contains(m_ppObjects[i]->m_xmOOBB);
+		CWallsObject c;
 		switch (containType)
 		{
 		case DISJOINT:
 		{
 			int nPlaneIndex = -1;
-			for (int j = 0; j < 6; j++)
-			{
+
+			for (int j = 0; j < sizeof(c.m_pxmffloorPlanes); ++j) {
 				PlaneIntersectionType intersectType = m_ppObjects[i]->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmffloorPlanes[j]));
 				if (intersectType == BACK)
 				{
@@ -262,6 +263,7 @@ void CScene::CheckObjectByWallCollisions()
 					break;
 				}
 			}
+			
 			if (nPlaneIndex != -1)
 			{
 				XMVECTOR xmvNormal = XMVectorSet(m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].x, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].y, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].z, 0.0f);
@@ -273,8 +275,8 @@ void CScene::CheckObjectByWallCollisions()
 		case INTERSECTS:
 		{
 			int nPlaneIndex = -1;
-			for (int j = 0; j < 6; j++)
-			{
+			
+			for (int j = 0; j < sizeof(c.m_pxmffloorPlanes); ++j) {
 				PlaneIntersectionType intersectType = m_ppObjects[i]->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmffloorPlanes[j]));
 				if (intersectType == INTERSECTING)
 				{
@@ -282,6 +284,7 @@ void CScene::CheckObjectByWallCollisions()
 					break;
 				}
 			}
+			
 			if (nPlaneIndex != -1)
 			{
 				XMVECTOR xmvNormal = XMVectorSet(m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].x, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].y, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].z, 0.0f);
@@ -302,7 +305,7 @@ void CScene::CheckPlayerByWallCollision()
 	m_pWallsObject->m_xmOOBBPlayerMoveCheck.Transform(xmOOBBPlayerMoveCheck, XMLoadFloat4x4(&m_pWallsObject->m_xmf4x4World));
 	XMStoreFloat4(&xmOOBBPlayerMoveCheck.Orientation, XMQuaternionNormalize(XMLoadFloat4(&xmOOBBPlayerMoveCheck.Orientation)));
 
-	if (!xmOOBBPlayerMoveCheck.Intersects(m_pPlayer->m_xmOOBB)) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);
+	if (!xmOOBBPlayerMoveCheck.Intersects(m_pPlayer->m_xmOOBB)) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);	//이게 원위치인듯
 }
 
 void CScene::CheckObjectByBulletCollisions()
