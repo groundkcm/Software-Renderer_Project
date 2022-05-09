@@ -106,6 +106,7 @@ public:
 
 public:
 	BoundingOrientedBox			m_xmOOBBPlayerMoveCheck = BoundingOrientedBox();
+	//변경시작
 	XMFLOAT4					m_pxmf4WallPlanes[6];
 	XMFLOAT4					m_pxmffloorPlanes[1];
 
