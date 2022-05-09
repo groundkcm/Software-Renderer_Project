@@ -180,7 +180,7 @@ CCubeMesh::CCubeMesh(float fWidth, float fHeight, float fDepth) : CMesh(6)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-CWallMesh::CWallMesh(float fWidth, float fHeight, float fDepth, int nSubRects) : CMesh((4 * nSubRects * nSubRects) + 2)
+CWallMesh::CWallMesh(float fWidth, float fHeight, float fDepth, int nSubRects) : CMesh((nSubRects * nSubRects) + 2)
 {
 	float fHalfWidth = fWidth * 0.5f;
 	float fHalfHeight = fHeight * 0.5f;
