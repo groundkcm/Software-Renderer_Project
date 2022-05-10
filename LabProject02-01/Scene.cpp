@@ -19,17 +19,17 @@ void CScene::BuildObjects()
 	CWallMesh* pWallCubeMesh = new CWallMesh(fHalfWidth * 2.0f, fHalfHeight * 2.0f, fHalfDepth * 2.0f, 30);
 
 	m_pWallsObject = new CWallsObject();
+	m_pWallsObject->SetMesh(pWallCubeMesh);
+	m_pWallsObject->SetColor(RGB(150, 255, 150));
+	m_pWallsObject->SetPosition(0.0f, 100.0f, 0.0f);
 	m_pWallsObject->m_pxmffloorPlanes[0] = XMFLOAT4(+1.0f, 0.0f, 0.0f, fHalfWidth);
 	m_pWallsObject->m_pxmffloorPlanes[1] = XMFLOAT4(-1.0f, 0.0f, 0.0f, fHalfWidth);		//바닥
 	m_pWallsObject->m_pxmffloorPlanes[2] = XMFLOAT4(0.0f, +1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[3] = XMFLOAT4(0.0f, -1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[4] = XMFLOAT4(0.0f, 0.0f, +1.0f, fHalfDepth);
 	m_pWallsObject->m_pxmffloorPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
-	m_pWallsObject->SetMesh(pWallCubeMesh);
-	m_pWallsObject->SetColor(RGB(150, 255, 150));
-	m_pWallsObject->SetPosition(0.0f, 0.0f, 0.0f);
-	m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.05f, fHalfHeight, fHalfDepth * 0.05f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
-	m_pWallsObject->MoveUp(100.0f);
+	//m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.1f, fHalfHeight, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+	//m_pWallsObject->MoveUp(100.0f);
 
 
 	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
@@ -245,61 +245,6 @@ void CScene::CheckObjectByObjectCollisions()
 	}
 }
 
-void CScene::CheckObjectByWallCollisions()
-{
-	for (int i = 0; i < m_nObjects; i++)
-	{
-		ContainmentType containType = m_pWallsObject->m_xmOOBB.Contains(m_ppObjects[i]->m_xmOOBB);
-		CWallsObject c;
-		switch (containType)
-		{
-		case DISJOINT:
-		{
-			int nPlaneIndex = -1;
-
-			for (int j = 0; j < sizeof(c.m_pxmffloorPlanes); ++j) {
-				PlaneIntersectionType intersectType = m_ppObjects[i]->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmffloorPlanes[j]));
-				if (intersectType == BACK)
-				{
-					nPlaneIndex = j;
-					break;
-				}
-			}
-			
-			if (nPlaneIndex != -1)
-			{
-				XMVECTOR xmvNormal = XMVectorSet(m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].x, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].y, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].z, 0.0f);
-				XMVECTOR xmvReflect = XMVector3Reflect(XMLoadFloat3(&m_ppObjects[i]->m_xmf3MovingDirection), xmvNormal);
-				XMStoreFloat3(&m_ppObjects[i]->m_xmf3MovingDirection, xmvReflect);
-			}
-			break;
-		}
-		case INTERSECTS:
-		{
-			int nPlaneIndex = -1;
-			
-			for (int j = 0; j < sizeof(c.m_pxmffloorPlanes); ++j) {
-				PlaneIntersectionType intersectType = m_ppObjects[i]->m_xmOOBB.Intersects(XMLoadFloat4(&m_pWallsObject->m_pxmffloorPlanes[j]));
-				if (intersectType == INTERSECTING)
-				{
-					nPlaneIndex = j;
-					break;
-				}
-			}
-			
-			if (nPlaneIndex != -1)
-			{
-				XMVECTOR xmvNormal = XMVectorSet(m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].x, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].y, m_pWallsObject->m_pxmffloorPlanes[nPlaneIndex].z, 0.0f);
-				XMVECTOR xmvReflect = XMVector3Reflect(XMLoadFloat3(&m_ppObjects[i]->m_xmf3MovingDirection), xmvNormal);
-				XMStoreFloat3(&m_ppObjects[i]->m_xmf3MovingDirection, xmvReflect);
-			}
-			break;
-		}
-		case CONTAINS:
-			break;
-		}
-	}
-}
 
 void CScene::CheckPlayerByWallCollision()
 {
@@ -310,22 +255,6 @@ void CScene::CheckPlayerByWallCollision()
 	if (!xmOOBBPlayerMoveCheck.Intersects(m_pPlayer->m_xmOOBB)) m_pWallsObject->SetPosition(m_pPlayer->m_xmf3Position);	//이게 원위치인듯
 }
 
-void CScene::CheckObjectByBulletCollisions()
-{
-	CBulletObject** ppBullets = ((CAirplanePlayer*)m_pPlayer)->m_ppBullets;
-	for (int i = 0; i < m_nObjects; i++)
-	{
-		for (int j = 0; j < BULLETS; j++)
-		{
-			if (ppBullets[j]->m_bActive && m_ppObjects[i]->m_xmOOBB.Intersects(ppBullets[j]->m_xmOOBB))
-			{
-				CExplosiveObject* pExplosiveObject = (CExplosiveObject*)m_ppObjects[i];
-				pExplosiveObject->m_bBlowingUp = true;
-				ppBullets[j]->Reset();
-			}
-		}
-	}
-}
 
 void CScene::Animate(float fElapsedTime)
 {
@@ -333,13 +262,12 @@ void CScene::Animate(float fElapsedTime)
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
-	CheckPlayerByWallCollision();
+	//CheckPlayerByWallCollision();
 
-	CheckObjectByWallCollisions();
+	//CheckObjectByWallCollisions();
 
 	CheckObjectByObjectCollisions();
 
-	CheckObjectByBulletCollisions();
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera* pCamera)

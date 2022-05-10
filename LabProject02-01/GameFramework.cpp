@@ -77,7 +77,8 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetColor(RGB(0, 0, 255));
 	m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pPlayer->SetCamera(pCamera);
-	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 10.0f, -115.0f));		//일단 이동
+	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 10.0f, -15.0f));		//일단 이동
+	m_pPlayer->Move(0.0f, 10.0f, -90.0f);		//왜 둘다하면 안되냐 ㅅㅂ
 
 	/*CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 8.0f, 6.0f);
 

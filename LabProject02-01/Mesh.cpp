@@ -219,24 +219,24 @@ CWallMesh::CWallMesh(float fWidth, float fHeight, float fDepth, int nSubRects) :
 	SetPolygon(k++, pBackFace);
 
 	CPolygon* pLeftFace = new CPolygon(4);
-	pLeftFace->SetVertex(0, CVertex(-fHalfWidth, +fHalfHeight, +fHalfDepth));
-	pLeftFace->SetVertex(1, CVertex(-fHalfWidth, +fHalfHeight, -fHalfDepth));
-	pLeftFace->SetVertex(2, CVertex(-fHalfWidth, -fHalfHeight, -fHalfDepth));
-	pLeftFace->SetVertex(3, CVertex(-fHalfWidth, -fHalfHeight, +fHalfDepth));
+	pLeftFace->SetVertex(0, CVertex(-fHalfWidth, +fHalfHeight, -fHalfDepth));
+	pLeftFace->SetVertex(1, CVertex(-fHalfWidth, +fHalfHeight, +fHalfDepth));
+	pLeftFace->SetVertex(2, CVertex(-fHalfWidth, -fHalfHeight, +fHalfDepth));
+	pLeftFace->SetVertex(3, CVertex(-fHalfWidth, -fHalfHeight, -fHalfDepth));
 	SetPolygon(k++, pLeftFace);
 
 	CPolygon* pRightFace = new CPolygon(4);
-	pRightFace->SetVertex(0, CVertex(+fHalfWidth, -fHalfHeight, +fHalfDepth));
-	pRightFace->SetVertex(1, CVertex(+fHalfWidth, -fHalfHeight, -fHalfDepth));
-	pRightFace->SetVertex(2, CVertex(+fHalfWidth, +fHalfHeight, -fHalfDepth));
-	pRightFace->SetVertex(3, CVertex(+fHalfWidth, +fHalfHeight, +fHalfDepth));
+	pRightFace->SetVertex(0, CVertex(+fHalfWidth, -fHalfHeight, -fHalfDepth));
+	pRightFace->SetVertex(1, CVertex(+fHalfWidth, -fHalfHeight, +fHalfDepth));
+	pRightFace->SetVertex(2, CVertex(+fHalfWidth, +fHalfHeight, +fHalfDepth));
+	pRightFace->SetVertex(3, CVertex(+fHalfWidth, +fHalfHeight, -fHalfDepth));
 	SetPolygon(k++, pRightFace);
 
 	CPolygon* pTopFace = new CPolygon(4);
-	pTopFace->SetVertex(0, CVertex(-fHalfWidth, +fHalfHeight, +fHalfDepth));
-	pTopFace->SetVertex(1, CVertex(+fHalfWidth, +fHalfHeight, +fHalfDepth));
-	pTopFace->SetVertex(2, CVertex(+fHalfWidth, +fHalfHeight, -fHalfDepth));
-	pTopFace->SetVertex(3, CVertex(-fHalfWidth, +fHalfHeight, -fHalfDepth));
+	pTopFace->SetVertex(0, CVertex(-fHalfWidth, +fHalfHeight, -fHalfDepth));
+	pTopFace->SetVertex(1, CVertex(+fHalfWidth, +fHalfHeight, -fHalfDepth));
+	pTopFace->SetVertex(2, CVertex(+fHalfWidth, +fHalfHeight, +fHalfDepth));
+	pTopFace->SetVertex(3, CVertex(-fHalfWidth, +fHalfHeight, +fHalfDepth));
 	SetPolygon(k++, pTopFace);
 	
 	m_xmOOBB = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
