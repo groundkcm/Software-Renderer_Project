@@ -113,6 +113,19 @@ public:
 	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
 };
 
+class CCubeObject : public CGameObject
+{
+public:
+	CCubeObject();
+	virtual ~CCubeObject();
+
+public:
+	BoundingOrientedBox			m_xmOOBBPlayerMoveCheck = BoundingOrientedBox();
+
+
+	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
+};
+
 class CBulletObject : public CGameObject
 {
 public:

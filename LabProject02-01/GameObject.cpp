@@ -209,6 +209,21 @@ void CWallsObject::Render(HDC hDCFrameBuffer, CCamera* pCamera)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 //
+CCubeObject::CCubeObject()
+{
+}
+
+CCubeObject::~CCubeObject()
+{
+}
+
+void CCubeObject::Render(HDC hDCFrameBuffer, CCamera* pCamera)
+{
+	CGameObject::Render(hDCFrameBuffer, pCamera);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 XMFLOAT3 CExplosiveObject::m_pxmf3SphereVectors[EXPLOSION_DEBRISES];
 CMesh* CExplosiveObject::m_pExplosionMesh = NULL;
 
