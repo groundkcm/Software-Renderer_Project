@@ -223,6 +223,13 @@ namespace Matrix4x4
 		return(xmmtx4x4Result);
 	}
 
+	inline XMFLOAT4X4 Scale(float x, float y, float z)
+	{
+		XMFLOAT4X4 xmmtx4x4Result;
+		XMStoreFloat4x4(&xmmtx4x4Result, XMMatrixScaling(x, y, z));
+		return(xmmtx4x4Result);
+	}
+
 	inline XMFLOAT4X4 RotationAxis(XMFLOAT3& xmf3Axis, float fAngle)
 	{
 		XMFLOAT4X4 xmmtx4x4Result;
