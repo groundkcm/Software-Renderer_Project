@@ -1,3 +1,4 @@
+#include <random>
 #include "stdafx.h"
 #include "Scene.h"
 #include "GraphicsPipeline.h"
@@ -31,10 +32,11 @@ void CScene::BuildObjects()
 	//m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.1f, fHalfHeight, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 	//m_pWallsObject->MoveUp(100.0f);
 
-
+	CCubeMesh* pRailMesh = new CCubeMesh(6.0f, 0.5f, 6.0f);
 	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 
-	m_nObjects = 10;
+	// ÆøÁ× 0~9 ³ª¸ÓÁö ·¹ÀÏ
+	m_nObjects = 110;
 	m_ppObjects = new CGameObject * [m_nObjects];
 
 	m_ppObjects[0] = new CExplosiveObject();
@@ -126,6 +128,17 @@ void CScene::BuildObjects()
 	m_ppObjects[9]->SetRotationSpeed(90.06f);
 	m_ppObjects[9]->SetMovingDirection(XMFLOAT3(-0.0f, 0.0f, -1.0f));
 	m_ppObjects[9]->SetMovingSpeed(15.0f);
+
+	for (int i = 10; i < 110; ++i) {
+		/*m_ppObjects[10] = new CCubeObject();
+		m_ppObjects[10]->SetMesh(pRailMesh);*/
+		m_ppObjects[i] = new CExplosiveObject();
+		m_ppObjects[i]->SetMesh(pRailMesh);
+		m_ppObjects[i]->SetColor(RGB(0, 0, 0));
+		m_ppObjects[i]->SetPosition(0.0f, 1.0f, -100.0f);
+		m_ppObjects[i]->Rotate(5.0f, 0.0f, 0.0f);
+	}
+
 
 #ifdef _WITH_DRAW_AXIS
 	m_pWorldAxis = new CGameObject();

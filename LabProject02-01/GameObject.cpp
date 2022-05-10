@@ -113,6 +113,12 @@ void CGameObject::Rotate(XMFLOAT3& xmf3RotationAxis, float fAngle)
 	m_xmf4x4World = Matrix4x4::Multiply(mtxRotate, m_xmf4x4World);
 }
 
+//void CGameObject::Scale(float x, float y, float z)
+//{
+//	XMFLOAT4X4 mtxScale = Matrix4x4::(fPitch, fYaw, fRoll);
+//	m_xmf4x4World = Matrix4x4::Multiply(mtxScale, m_xmf4x4World);
+//}
+
 void CGameObject::Move(XMFLOAT3& vDirection, float fSpeed)
 {
 	SetPosition(m_xmf4x4World._41 + vDirection.x * fSpeed, m_xmf4x4World._42 + vDirection.y * fSpeed, m_xmf4x4World._43 + vDirection.z * fSpeed);
