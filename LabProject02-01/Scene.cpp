@@ -73,37 +73,40 @@ void CScene::BuildObjects()
 		if (i < 25) {
 			randnum = uid(dre);
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
-			m_ppObjects[i]->SetPosition(0.0f, prange.y + 4.0f, -100.0f + (i - 10) * 5.0f);
+			m_ppObjects[i]->SetPosition(-50.0f, prange.y + 4.0f, -100.0f + (i - 10) * 5.0f);
 		}
 		else if (i >= 25 && i < 35) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f*(i-25));
-			m_ppObjects[i]->SetPosition(prange.x + 1.0f, prange.y, prange.z + 3.0f);
+			if (i<30)
+				m_ppObjects[i]->SetPosition(prange.x + 0.5f, prange.y, prange.z + 3.0f);
+			else
+				m_ppObjects[i]->SetPosition(prange.x + 3.0f, prange.y, prange.z + 3.0f);
 		}
-		else if (i >= 35 && i < 50) {
+		else if (i >= 35 && i < 45) {
 			randnum = uid(dre);
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 40.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
 			m_ppObjects[i]->SetPosition(prange.x + 5.0f, prange.y - 4.0f, prange.z);
 		}
-		else if (i >= 50 && i < 75) {
+		else if (i >= 45 && i < 55) {
+			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 20.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -9.0f * (i - 25));
+			if (i < 50)
+				m_ppObjects[i]->SetPosition(prange.x + 3.0f, prange.y + 1.0f, prange.z + 0.5f);
+			else
+				m_ppObjects[i]->SetPosition(prange.x + 2.0f, prange.y + 1.0f, prange.z + 3.0f);
+		}
+		else if (i >= 55 && i < 70) {
 
 		}
-		else if (i >= 75 && i < 90) {
+		else if (i >= 70 && i < 90) {
 
 		}
 		else {
 			m_ppObjects[i]->Rotate(-uid(dre), 0, 0);
 		}
 		prange = m_ppObjects[i]->GetPosition();
-
-		/*XMFLOAT3 t{ m_ppObjects[i]->GetLook() };
-		if(t.x != 0)
-			if (t.x < 0)
-				m_ppObjects[i]->SetPosition(-miuid(dre), 0.5f + i* miuid(dre), -100.0f + (i-10)*5.0f);
-			else 
-				m_ppObjects[i]->SetPosition(miuid(dre), 0.5f + i * miuid(dre), -100.0f + (i - 10) * 5.0f);
-		else
-			m_ppObjects[i]->SetPosition(0.0f, 0.5f + i * miuid(dre), -100.0f + (i - 10) * 5.0f);*/
 	}
 
 

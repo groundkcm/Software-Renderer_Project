@@ -78,7 +78,7 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pPlayer->SetCamera(pCamera);
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 10.0f, -15.0f));
-	m_pPlayer->Move(0.0f, 1.0f, -100.0f);
+	m_pPlayer->Move(-50.0f, 5.0f, -100.0f);
 
 	/*CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 8.0f, 6.0f);
 
