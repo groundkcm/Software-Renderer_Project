@@ -18,6 +18,8 @@ public:
 	XMFLOAT3					m_xmf3CameraOffset = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMFLOAT3					m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
+	bool						aniswitch = false;
+
 	float						m_fFriction = 125.0f;
 
 	float           			m_fPitch = 0.0f;

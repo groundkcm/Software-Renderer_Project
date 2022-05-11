@@ -77,7 +77,7 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetColor(RGB(0, 0, 255));
 	m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pPlayer->SetCamera(pCamera);
-	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 10.0f, -15.0f));
+	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -10.0f));
 	m_pPlayer->Move(-50.0f, 5.0f, -100.0f);
 
 	/*CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 8.0f, 6.0f);
@@ -132,7 +132,7 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
 	if (m_pScene) m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
-
+	static int checking{};
 	switch (nMessageID)
 	{
 	case WM_KEYDOWN:
@@ -143,9 +143,11 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 		case VK_RETURN:
 			break;
-		case VK_CONTROL:
-			((CAirplanePlayer*)m_pPlayer)->FireBullet(m_pLockedObject);
-			m_pLockedObject = NULL;
+		case VK_SPACE:
+			if (++checking % 2)
+				((CAirplanePlayer*)m_pPlayer)->aniswitch = false;
+			else
+				((CAirplanePlayer*)m_pPlayer)->aniswitch = true;
 			break;
 		default:
 			m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
