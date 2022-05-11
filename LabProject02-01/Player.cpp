@@ -1,3 +1,4 @@
+#include <vector>
 #include "stdafx.h"
 #include "Player.h"
 #include "GameFramework.h"
@@ -110,8 +111,29 @@ void CPlayer::Update(float fTimeElapsed)
 	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Deceleration, fDeceleration);
 }
 
+extern std::vector<CGameObject*> v;
+
 void CPlayer::Animate(float fElapsedTime)
 {
+	XMVECTOR ptemp{}, vtemp{}, mtemp{};
+	XMFLOAT3 temp{};
+	if (aniswitch) {
+		static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
+		for (int i{}; i < 105; ++i) {
+			temp = v[i]->GetPosition();
+
+			ptemp = XMVectorSet(prange.x, prange.y, prange.z, NULL);
+			vtemp = XMVectorSet(temp.x, temp.y, temp.z, NULL);
+			for (float j{}; j < 1.0f; j += 0.1f) {
+				mtemp = XMVectorLerp(ptemp, vtemp, 0.2f);
+				m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
+			}
+			if (Vector3::Same(m_xmf3Position, v[14]->GetPosition()))
+				break;
+			prange = v[i]->GetPosition();
+		}
+	}
+
 	OnUpdateTransform();
 
 	CGameObject::Animate(fElapsedTime);

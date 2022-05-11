@@ -226,10 +226,6 @@ void CGameFramework::ProcessInput()
 
 void CGameFramework::AnimateObjects()
 {
-	if (m_pPlayer->aniswitch) {
-		//m_pPlayer->Move(dwDirection, 0.3f);
-	}
-
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
 	if (m_pPlayer) m_pPlayer->Animate(fTimeElapsed);
 	if (m_pScene) m_pScene->Animate(fTimeElapsed);

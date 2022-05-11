@@ -74,6 +74,14 @@ namespace Vector3
 		return(xmf3Result);
 	}
 
+	inline bool Same(const XMFLOAT3& xmf3Vector1, const XMFLOAT3& xmf3Vector2)
+	{
+		bool check = false;
+		if ((xmf3Vector1.x == xmf3Vector2.x) && (xmf3Vector1.y == xmf3Vector2.y) && (xmf3Vector1.z == xmf3Vector2.z))
+			check = true;
+		return(check);
+	}
+
 	inline XMFLOAT3 Add(XMFLOAT3& xmf3Vector1, XMFLOAT3& xmf3Vector2, float fScalar)
 	{
 		XMFLOAT3 xmf3Result;
@@ -87,6 +95,14 @@ namespace Vector3
 		XMStoreFloat3(&xmf3Result, XMLoadFloat3(&xmf3Vector1) - XMLoadFloat3(&xmf3Vector2));
 		return(xmf3Result);
 	}
+
+	/*inline XMFLOAT3 Multiply(XMFLOAT3& xmf3Vector1, float fScalar)
+	{
+		xmf3Vector1.x *= fScalar;
+		xmf3Vector1.y *= fScalar;
+		xmf3Vector1.z *= fScalar;
+		return(xmf3Vector1);
+	}*/
 
 	inline float DotProduct(XMFLOAT3& xmf3Vector1, XMFLOAT3& xmf3Vector2)
 	{

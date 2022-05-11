@@ -71,19 +71,19 @@ void CScene::BuildObjects()
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
 			m_ppObjects[i]->SetPosition(-50.0f, prange.y + 4.0f, -100.0f + (i - 10) * 5.0f);
 		}		//올라가기
-		else if (i >= 25 && i < 35) {
+		else if (i < 35) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f*(i-25));
 			if (i<30)
 				m_ppObjects[i]->SetPosition(prange.x + 0.5f, prange.y, prange.z + 3.0f);
 			else
 				m_ppObjects[i]->SetPosition(prange.x + 3.0f, prange.y, prange.z + 2.0f);
 		}		//회전
-		else if (i >= 35 && i < 45) {
+		else if (i < 45) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 40.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
 			m_ppObjects[i]->SetPosition(prange.x + 5.0f, prange.y - 4.0f, prange.z);
 		}		//낙하 1
-		else if (i >= 45 && i < 55) {
+		else if (i < 55) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -20.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -9.0f * (i - 45));
@@ -92,7 +92,7 @@ void CScene::BuildObjects()
 			else
 				m_ppObjects[i]->SetPosition(prange.x + 2.0f, prange.y + 1.0f, prange.z + 3.0f);
 		}		//회전 + 상승
-		else if (i >= 55 && i < 65) {
+		else if (i < 65) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -5.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -9.0f * (i - 55));
@@ -101,7 +101,7 @@ void CScene::BuildObjects()
 			else
 				m_ppObjects[i]->SetPosition(prange.x - 3.0f, prange.y + 4.0f, prange.z + 3.0f);
 		}		//상승 + 조금 비틈
-		else if (i >= 65 && i < 95) {
+		else if (i < 95) {
 			if (i < 75) {
 				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -12.0f*(i-65));
 				m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 30.0f);
@@ -121,7 +121,7 @@ void CScene::BuildObjects()
 				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 1.5f, prange.z + 1.0f);
 			}
 		}		//회전 낙하 ->너무 내려감.
-		else if (i >= 95 && i < 105) {
+		else if (i < 105) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f * (i - 95));
 			if (i < 100)
