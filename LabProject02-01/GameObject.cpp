@@ -110,7 +110,7 @@ void CGameObject::Rotate(float fPitch, float fYaw, float fRoll)
 void CGameObject::Rotate(XMFLOAT3& xmf3RotationAxis, float fAngle)
 {
 	XMFLOAT4X4 mtxRotate = Matrix4x4::RotationAxis(xmf3RotationAxis, fAngle);
-	m_xmf4x4World = Matrix4x4::Multiply(mtxRotate, m_xmf4x4World);
+	m_xmf4x4World = Matrix4x4::Multiply(m_xmf4x4World, mtxRotate);
 }
 
 void CGameObject::Scale(float x, float y, float z)

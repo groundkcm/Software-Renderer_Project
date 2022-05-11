@@ -44,6 +44,7 @@ void CScene::BuildObjects()
 	m_ppObjects = new CGameObject * [m_nObjects];
 
 	std::uniform_int_distribution<int> iuid(0, 255);
+	std::uniform_int_distribution<int> choice(0, 1);
 	std::uniform_real_distribution<float> suid(1.0f, 2.5f);
 	std::uniform_real_distribution<float> puid(-90.0f, 90.0f);
 	std::uniform_real_distribution<float> muid(0.0f, 45.0f);
@@ -53,8 +54,8 @@ void CScene::BuildObjects()
 		m_ppObjects[i]->Scale(suid(dre), suid(dre), suid(dre));
 		m_ppObjects[i]->SetColor(RGB(iuid(dre), iuid(dre), iuid(dre)));
 		m_ppObjects[i]->SetPosition(puid(dre), 0.0f, puid(dre));
-		m_ppObjects[i]->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
-		m_ppObjects[i]->SetRotationSpeed(90.0f);
+		m_ppObjects[i]->SetRotationAxis(XMFLOAT3((float)choice(dre), (float)choice(dre), (float)choice(dre)));
+		m_ppObjects[i]->SetRotationSpeed(muid(dre)*2);
 		m_ppObjects[i]->SetMovingDirection(XMFLOAT3(0.0f, 1.0f, 0.0f));
 		m_ppObjects[i]->SetMovingSpeed(muid(dre));
 	}
@@ -68,21 +69,41 @@ void CScene::BuildObjects()
 		m_ppObjects[i]->SetColor(RGB(0, 0, 0));
 		static XMFLOAT3 tangle{};		//조금씩 이동
 		static XMFLOAT3 prange{};
-		if (i < 25)
-			m_ppObjects[i]->Rotate(uid(dre), 0, 0);
-		else if (i > 25 && i < 95) 
-			m_ppObjects[i]->Rotate(uid(dre), uid(dre), uid(dre));
-		else 
+		float randnum{};
+		if (i < 25) {
+			randnum = uid(dre);
+			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
+			m_ppObjects[i]->SetPosition(0.0f, prange.y + 4.0f, -100.0f + (i - 10) * 5.0f);
+		}
+		else if (i >= 25 && i < 35) {
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f*(i-25));
+			m_ppObjects[i]->SetPosition(prange.x + 1.0f, prange.y, prange.z + 3.0f);
+		}
+		else if (i >= 35 && i < 50) {
+			randnum = uid(dre);
+			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 40.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
+			m_ppObjects[i]->SetPosition(prange.x + 5.0f, prange.y - 4.0f, prange.z);
+		}
+		else if (i >= 50 && i < 75) {
+
+		}
+		else if (i >= 75 && i < 90) {
+
+		}
+		else {
 			m_ppObjects[i]->Rotate(-uid(dre), 0, 0);
-		XMFLOAT3 t{ m_ppObjects[i]->GetLook() };
+		}
+		prange = m_ppObjects[i]->GetPosition();
+
+		/*XMFLOAT3 t{ m_ppObjects[i]->GetLook() };
 		if(t.x != 0)
 			if (t.x < 0)
 				m_ppObjects[i]->SetPosition(-miuid(dre), 0.5f + i* miuid(dre), -100.0f + (i-10)*5.0f);
 			else 
 				m_ppObjects[i]->SetPosition(miuid(dre), 0.5f + i * miuid(dre), -100.0f + (i - 10) * 5.0f);
 		else
-			m_ppObjects[i]->SetPosition(0.0f, 0.5f + i * miuid(dre), -100.0f + (i - 10) * 5.0f);
-		prange = m_ppObjects[i]->GetPosition();
+			m_ppObjects[i]->SetPosition(0.0f, 0.5f + i * miuid(dre), -100.0f + (i - 10) * 5.0f);*/
 	}
 
 
