@@ -1,3 +1,4 @@
+#include <vector>
 #include <random>
 #include "stdafx.h"
 #include "Scene.h"
@@ -15,6 +16,7 @@ CScene::~CScene()
 
 std::random_device rd;
 std::default_random_engine dre(rd());
+std::vector<CGameObject*> v;
 
 void CScene::BuildObjects()
 {
@@ -33,15 +35,13 @@ void CScene::BuildObjects()
 	m_pWallsObject->m_pxmffloorPlanes[3] = XMFLOAT4(0.0f, -1.0f, 0.0f, fHalfHeight);
 	m_pWallsObject->m_pxmffloorPlanes[4] = XMFLOAT4(0.0f, 0.0f, +1.0f, fHalfDepth);
 	m_pWallsObject->m_pxmffloorPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
-	//m_pWallsObject->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth * 0.1f, fHalfHeight, fHalfDepth * 0.1f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
-	//m_pWallsObject->MoveUp(100.0f);
 
-	//CCubeMesh* pRailMesh = new CCubeMesh(6.0f, 0.5f, 6.0f);
 	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 
 	// ÆøÁ× 0~9 ³ª¸ÓÁö ·¹ÀÏ
 	m_nObjects = 115;
 	m_ppObjects = new CGameObject * [m_nObjects];
+	v.reserve(105);
 
 	std::uniform_int_distribution<int> iuid(0, 255);
 	std::uniform_int_distribution<int> choice(0, 1);
@@ -138,6 +138,7 @@ void CScene::BuildObjects()
 				m_ppObjects[i]->SetPosition(prange.x, prange.y - 3.0f, prange.z + 3.0f);
 			}
 		}
+		v.push_back(m_ppObjects[i]);
 		prange = m_ppObjects[i]->GetPosition();
 	}
 

@@ -145,9 +145,9 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			break;
 		case VK_SPACE:
 			if (++checking % 2)
-				((CAirplanePlayer*)m_pPlayer)->aniswitch = false;
+				m_pPlayer->aniswitch = false;
 			else
-				((CAirplanePlayer*)m_pPlayer)->aniswitch = true;
+				m_pPlayer->aniswitch = true;
 			break;
 		default:
 			m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
@@ -226,6 +226,10 @@ void CGameFramework::ProcessInput()
 
 void CGameFramework::AnimateObjects()
 {
+	if (m_pPlayer->aniswitch) {
+		//m_pPlayer->Move(dwDirection, 0.3f);
+	}
+
 	float fTimeElapsed = m_GameTimer.GetTimeElapsed();
 	if (m_pPlayer) m_pPlayer->Animate(fTimeElapsed);
 	if (m_pScene) m_pScene->Animate(fTimeElapsed);

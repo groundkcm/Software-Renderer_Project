@@ -153,13 +153,6 @@ CAirplanePlayer::~CAirplanePlayer()
 void CAirplanePlayer::Animate(float fElapsedTime)
 {
 	CPlayer::Animate(fElapsedTime);
-
-	if (aniswitch) {
-		
-	}
-	else {
-
-	}
 }
 
 void CAirplanePlayer::OnUpdateTransform()
