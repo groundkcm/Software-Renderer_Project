@@ -136,7 +136,12 @@ void CPlayer::Animate(float fElapsedTime)
 
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
+		SetCameraOffset(m_xmf3Position);
+		/*temp = m_xmf3Position;
 
+		temp.y += 5.0f;
+		temp.z -= 10.0f;
+		SetCameraOffset(temp);*/
 		j += 0.1f;
 		if (j > 1.0f) j = 0.0f;
 	}
