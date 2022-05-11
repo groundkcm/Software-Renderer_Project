@@ -40,7 +40,7 @@ void CScene::BuildObjects()
 	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 4.0f);
 
 	// 폭죽 0~9 나머지 레일
-	m_nObjects = 110;
+	m_nObjects = 120;
 	m_ppObjects = new CGameObject * [m_nObjects];
 
 	std::uniform_int_distribution<int> iuid(0, 255);
@@ -53,59 +53,87 @@ void CScene::BuildObjects()
 		m_ppObjects[i]->SetMesh(pCubeMesh);
 		m_ppObjects[i]->Scale(suid(dre), suid(dre), suid(dre));
 		m_ppObjects[i]->SetColor(RGB(iuid(dre), iuid(dre), iuid(dre)));
-		m_ppObjects[i]->SetPosition(puid(dre), 0.0f, puid(dre));
 		m_ppObjects[i]->SetRotationAxis(XMFLOAT3((float)choice(dre), (float)choice(dre), (float)choice(dre)));
 		m_ppObjects[i]->SetRotationSpeed(muid(dre)*2);
+		m_ppObjects[i]->SetPosition(puid(dre), 0.0f, puid(dre));
 		m_ppObjects[i]->SetMovingDirection(XMFLOAT3(0.0f, 1.0f, 0.0f));
 		m_ppObjects[i]->SetMovingSpeed(muid(dre));
 	}
 
-	std::uniform_real_distribution<float> uid(0.0f, 2.5f);
-	std::uniform_real_distribution<float> miuid(0.0f, 1.0f);
-	for (int i = 10; i < 110; ++i) {
+	for (int i = 10; i < 120; ++i) {
 		m_ppObjects[i] = new CExplosiveObject();
 		m_ppObjects[i]->SetMesh(pCubeMesh);
 		m_ppObjects[i]->Scale(1.5f, 0.1f, 1.5f);
 		m_ppObjects[i]->SetColor(RGB(0, 0, 0));
 		static XMFLOAT3 tangle{};		//조금씩 이동
 		static XMFLOAT3 prange{};
-		float randnum{};
 		if (i < 25) {
-			randnum = uid(dre);
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
 			m_ppObjects[i]->SetPosition(-50.0f, prange.y + 4.0f, -100.0f + (i - 10) * 5.0f);
-		}
+		}		//올라가기
 		else if (i >= 25 && i < 35) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f*(i-25));
 			if (i<30)
 				m_ppObjects[i]->SetPosition(prange.x + 0.5f, prange.y, prange.z + 3.0f);
 			else
-				m_ppObjects[i]->SetPosition(prange.x + 3.0f, prange.y, prange.z + 3.0f);
-		}
+				m_ppObjects[i]->SetPosition(prange.x + 3.0f, prange.y, prange.z + 2.0f);
+		}		//회전
 		else if (i >= 35 && i < 45) {
-			randnum = uid(dre);
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 40.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
 			m_ppObjects[i]->SetPosition(prange.x + 5.0f, prange.y - 4.0f, prange.z);
-		}
+		}		//낙하 1
 		else if (i >= 45 && i < 55) {
-			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 20.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -20.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
-			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -9.0f * (i - 25));
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -9.0f * (i - 45));
 			if (i < 50)
 				m_ppObjects[i]->SetPosition(prange.x + 3.0f, prange.y + 1.0f, prange.z + 0.5f);
 			else
 				m_ppObjects[i]->SetPosition(prange.x + 2.0f, prange.y + 1.0f, prange.z + 3.0f);
-		}
-		else if (i >= 55 && i < 70) {
-
-		}
-		else if (i >= 70 && i < 90) {
-
-		}
-		else {
-			m_ppObjects[i]->Rotate(-uid(dre), 0, 0);
-		}
+		}		//회전 + 상승
+		else if (i >= 55 && i < 65) {
+			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -5.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -9.0f * (i - 55));
+			if (i < 60)
+				m_ppObjects[i]->SetPosition(prange.x - 1.0f, prange.y + 3.0f, prange.z + 3.0f);
+			else
+				m_ppObjects[i]->SetPosition(prange.x - 3.0f, prange.y + 4.0f, prange.z + 3.0f);
+		}		//상승 + 조금 비틈
+		else if (i >= 65 && i < 95) {
+			if (i < 75) {
+				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -12.0f*(i-65));
+				m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 30.0f);
+				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
+				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 3.0f, prange.z + 1.0f);
+			}
+			else if (i < 85) {
+				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -12.0f * (i - 65));
+				m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 30.0f);
+				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
+				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 3.0f, prange.z - 1.0f);
+			}
+			else {
+				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -12.0f * (i - 65));
+				m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 30.0f);
+				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
+				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 3.0f, prange.z + 1.0f);
+			}
+		}		//회전 낙하 ->너무 내려감.
+		else if (i >= 95 && i < 105) {
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f * (i - 95));
+			if (i < 100)
+				m_ppObjects[i]->SetPosition(prange.x - 3.0f, prange.y + 1.0f, prange.z + 0.5f);
+			else
+				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y + 1.0f, prange.z + 3.0f);	
+		}		//회전
+		/*else {
+			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 40.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 90.0f);
+			m_ppObjects[i]->SetPosition(prange.x + 5.0f, prange.y - 4.0f, prange.z);
+		}*/
 		prange = m_ppObjects[i]->GetPosition();
 	}
 
