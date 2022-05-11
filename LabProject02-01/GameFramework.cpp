@@ -199,7 +199,7 @@ void CGameFramework::ProcessInput()
 		if (pKeyBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
 		if (pKeyBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
 
-		if (dwDirection) m_pPlayer->Move(dwDirection, 0.15f);
+		if (dwDirection) m_pPlayer->Move(dwDirection, 0.3f);
 	}
 
 	if (GetCapture() == m_hWnd)
@@ -237,8 +237,8 @@ void CGameFramework::FrameAdvance()
 
 	AnimateObjects();
 
-    //ClearFrameBuffer(RGB(255, 255, 255));
-    ClearFrameBuffer(RGB(125, 150, 224));
+    ClearFrameBuffer(RGB(0, 0, 0));
+    //ClearFrameBuffer(RGB(125, 150, 224));
 
 	CCamera* pCamera = m_pPlayer->GetCamera();
 	if (m_pScene) m_pScene->Render(m_hDCFrameBuffer, pCamera);
