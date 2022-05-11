@@ -115,23 +115,30 @@ extern std::vector<CGameObject*> v;
 
 void CPlayer::Animate(float fElapsedTime)
 {
-	XMVECTOR ptemp{}, vtemp{}, mtemp{};
+	static int i{};
+	static float j{};
+	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
+	static XMVECTOR ptemp, vtemp, mtemp;
 	XMFLOAT3 temp{};
-	if (aniswitch) {
-		static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
-		for (int i{}; i < 105; ++i) {
-			temp = v[i]->GetPosition();
 
+	if (i > 104) aniswitch = false;
+
+	if (aniswitch) {
+
+		if (j == 0.0f) {
+			temp = v[i]->GetPosition();
 			ptemp = XMVectorSet(prange.x, prange.y, prange.z, NULL);
 			vtemp = XMVectorSet(temp.x, temp.y, temp.z, NULL);
-			for (float j{}; j < 1.0f; j += 0.1f) {
-				mtemp = XMVectorLerp(ptemp, vtemp, 0.2f);
-				m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
-			}
-			if (Vector3::Same(m_xmf3Position, v[14]->GetPosition()))
-				break;
+
 			prange = v[i]->GetPosition();
+			++i;
 		}
+
+		mtemp = XMVectorLerp(ptemp, vtemp, j);
+		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
+
+		j += 0.1f;
+		if (j > 1.0f) j = 0.0f;
 	}
 
 	OnUpdateTransform();
