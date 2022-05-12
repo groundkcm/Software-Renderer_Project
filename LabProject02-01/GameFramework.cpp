@@ -71,7 +71,7 @@ void CGameFramework::BuildObjects()
 	pCamera->GenerateOrthographicProjectionMatrix(1.01f, 50.0f, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
 
 
-	CCubeMesh* pCubeMesh = new CCubeMesh(4.0f, 4.0f, 2.0f);
+	CFullCubeMesh* pCubeMesh = new CFullCubeMesh(4.0f, 4.0f, 2.0f, 10);
 
 	m_pPlayer = new CRollerCosterPlayer();
 	m_pPlayer->SetMesh(pCubeMesh);
@@ -104,14 +104,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 	{
 	case WM_RBUTTONDOWN:
 	case WM_LBUTTONDOWN:
-		::SetCapture(hWnd);
-		::GetCursorPos(&m_ptOldCursorPos);
-		if (nMessageID == WM_RBUTTONDOWN) m_pLockedObject = m_pScene->PickObjectPointedByCursor(LOWORD(lParam), HIWORD(lParam), m_pPlayer->m_pCamera);
-		break;
 	case WM_LBUTTONUP:
 	case WM_RBUTTONUP:
-		::ReleaseCapture();
-		break;
 	case WM_MOUSEMOVE:
 		break;
 	default:

@@ -64,10 +64,17 @@ public:
 	virtual ~CCubeMesh() { }
 };
 
+class CFullCubeMesh : public CMesh
+{
+public:
+	CFullCubeMesh(float fWidth = 4.0f, float fHeight = 4.0f, float fDepth = 4.0f, int nSubRects = 10);
+	virtual ~CFullCubeMesh() { }
+};
+
 class CWallMesh : public CMesh
 {
 public:
-	CWallMesh(float fWidth = 4.0f, float fHeight = 4.0f, float fDepth = 4.0f, int nSubRects = 20);
+	CWallMesh(float fWidth = 4.0f, float fHeight = 4.0f, int nSubRects = 20);
 	virtual ~CWallMesh() { }
 };
 

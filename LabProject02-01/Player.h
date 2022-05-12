@@ -52,7 +52,6 @@ public:
 	CCamera* GetCamera() { return(m_pCamera); }
 };
 
-#define BULLETS					50
 
 class CRollerCosterPlayer : public CPlayer
 {
