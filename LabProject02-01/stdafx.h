@@ -96,14 +96,6 @@ namespace Vector3
 		return(xmf3Result);
 	}
 
-	/*inline XMFLOAT3 Multiply(XMFLOAT3& xmf3Vector1, float fScalar)
-	{
-		xmf3Vector1.x *= fScalar;
-		xmf3Vector1.y *= fScalar;
-		xmf3Vector1.z *= fScalar;
-		return(xmf3Vector1);
-	}*/
-
 	inline float DotProduct(XMFLOAT3& xmf3Vector1, XMFLOAT3& xmf3Vector2)
 	{
 		XMFLOAT3 xmf3Result;
@@ -120,6 +112,7 @@ namespace Vector3
 			XMStoreFloat3(&xmf3Result, XMVector3Cross(XMVector3Normalize(XMLoadFloat3(&xmf3Vector1)), XMVector3Normalize(XMLoadFloat3(&xmf3Vector2))));
 		return(xmf3Result);
 	}
+
 
 	inline XMFLOAT3 Normalize(XMFLOAT3& xmf3Vector)
 	{

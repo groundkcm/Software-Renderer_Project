@@ -119,9 +119,10 @@ void CPlayer::Animate(float fElapsedTime)
 	static float j{};
 	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
 	static XMFLOAT3 tangle{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
-	static XMFLOAT3 tup{ XMFLOAT3(-50.0f, 100.0f, -100.0f) };
-	static XMVECTOR ptemp, vtemp, mtemp, pang, vang, mang, pup, vup, mup;
-	XMFLOAT3 temp, atemp, utemp;
+	static XMVECTOR ptemp, vtemp, mtemp, pang, vang, mang;
+	XMFLOAT3 temp, atemp;
+	XMFLOAT4X4 rotatemat;
+	float ang{};
 
 	if (i > 104) aniswitch = false;
 
@@ -130,7 +131,6 @@ void CPlayer::Animate(float fElapsedTime)
 		if (j == 0.0f) {
 			temp = v[i]->GetPosition();
 			atemp = v[i]->GetLook();
-			utemp = v[i]->GetUp();
 
 			ptemp = XMVectorSet(prange.x, prange.y, prange.z, NULL);
 			vtemp = XMVectorSet(temp.x, temp.y, temp.z, NULL);
@@ -138,22 +138,22 @@ void CPlayer::Animate(float fElapsedTime)
 			pang = XMVectorSet(tangle.x, tangle.y, tangle.z, NULL);
 			vang = XMVectorSet(atemp.x, atemp.y, atemp.z, NULL);
 
-			pup = XMVectorSet(tup.x, tup.y, tup.z, NULL);
-			vup = XMVectorSet(utemp.x, utemp.y, utemp.z, NULL);
+			mang = XMVector3Dot(pang, vang);
+			ang += XMVectorGetX(mang);
+			ang += XMVectorGetY(mang);
+			ang += XMVectorGetZ(mang);
+
+			rotatemat = Matrix4x4::RotationAxis(tangle, ang);
+			m_xmf4x4World = Matrix4x4::Multiply(rotatemat, m_xmf4x4World);
 
 			prange = v[i]->GetPosition();
 			tangle = v[i]->GetLook();
-			tup = v[i]->GetUp();
+
 			++i;
 		}
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
-		mang = XMVectorLerp(pang, vang, j);
-		mup = XMVectorLerp(pup, vup, j);
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
-		LookAt(Vector3::XMVectorToFloat3(mang), Vector3::XMVectorToFloat3(mup));
-		/*m_xmf3Look = Vector3::XMVectorToFloat3(mang);
-		m_xmf3Up = Vector3::XMVectorToFloat3(mup);*/
 		//SetCameraOffset(m_xmf3Position);
 		if (i < 15)		//올라가기
 			j += 0.03f;

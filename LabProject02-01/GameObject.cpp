@@ -223,6 +223,11 @@ CCubeObject::~CCubeObject()
 {
 }
 
+void CCubeObject::Animate(float fElapsedTime)
+{
+	CGameObject::Animate(fElapsedTime);
+}
+
 void CCubeObject::Render(HDC hDCFrameBuffer, CCamera* pCamera)
 {
 	CGameObject::Render(hDCFrameBuffer, pCamera);
