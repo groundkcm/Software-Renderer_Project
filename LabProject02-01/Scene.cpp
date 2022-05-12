@@ -39,7 +39,7 @@ void CScene::BuildObjects()
 
 	std::uniform_int_distribution<int> iuid(0, 255);
 	std::uniform_int_distribution<int> choice(0, 1);
-	std::uniform_real_distribution<float> suid(1.0f, 2.5f);
+	std::uniform_real_distribution<float> suid(0.1f, 0.5f);
 	std::uniform_real_distribution<float> puid(-90.0f, 90.0f);
 	std::uniform_real_distribution<float> muid(0.0f, 45.0f);
 	for (int i = 0; i < FIREWORKS; ++i) {
@@ -268,13 +268,25 @@ void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 	}
 }
 
+void CScene::FireWorks()
+{
+	XMFLOAT3 pcheck;
+	std::uniform_real_distribution<float> uid(150.0f, 190.0f);
+
+	for (int i{}; i < FIREWORKS; ++i) {
+		pcheck = m_ppObjects[i]->GetPosition();
+		if (pcheck.y > uid(dre))
+			((CExplosiveObject*)m_ppObjects[i])->m_bBlowingUp = true;
+	}
+}
+
 void CScene::Animate(float fElapsedTime)
 {
 	m_pWallsObject->Animate(fElapsedTime);
 
 	for (int i = 0; i < m_nObjects; i++) m_ppObjects[i]->Animate(fElapsedTime);
 
-
+	FireWorks();
 }
 
 void CScene::Render(HDC hDCFrameBuffer, CCamera* pCamera)

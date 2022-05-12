@@ -26,6 +26,8 @@ public:
 	virtual void BuildObjects();
 	virtual void ReleaseObjects();
 
+	void FireWorks();
+
 	virtual void Animate(float fElapsedTime);
 	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
 

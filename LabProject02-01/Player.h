@@ -19,6 +19,7 @@ public:
 	XMFLOAT3					m_xmf3Velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 	bool						aniswitch = false;
+	bool						reset = false;
 
 	float						m_fFriction = 125.0f;
 

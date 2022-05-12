@@ -274,6 +274,8 @@ void CExplosiveObject::Animate(float fElapsedTime)
 		{
 			m_bBlowingUp = false;
 			m_fElapsedTimes = 0.0f;
+			XMFLOAT3 xmf3Position = GetPosition();
+			SetPosition(xmf3Position.x, 0.0f, xmf3Position.z);
 		}
 	}
 	else

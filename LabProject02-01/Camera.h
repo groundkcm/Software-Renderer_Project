@@ -59,6 +59,7 @@ public:
 	void GenerateOrthographicProjectionMatrix(float fNearPlaneDistance, float fFarPlaneDistance, float fWidth, float hHeight);
 	void SetViewport(int xTopLeft, int yTopLeft, int nWidth, int nHeight);
 
+	void SetView(XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Right, XMFLOAT3& xmf3Up);
 	void SetLookAt(XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up);
 	void SetLookAt(XMFLOAT3& vPosition, XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up);
 

@@ -124,6 +124,12 @@ void CPlayer::Animate(float fElapsedTime)
 	XMFLOAT4X4 rotatemat;
 	float ang{};
 
+	if (reset) {
+		aniswitch = false;
+		i = 0, j = 0;
+		m_xmf3Position = XMFLOAT3(-50.0f, 5.0f, -50.0f);
+	}
+
 	if (i > v.size() - 1) {
 		aniswitch = false;
 		i = 0;
@@ -142,7 +148,7 @@ void CPlayer::Animate(float fElapsedTime)
 			vang = XMVectorSet(atemp.x, atemp.y, atemp.z, NULL);
 
 			m_xmf3Look = atemp;
-			m_xmf3Right = v[i]->GetRight();
+			m_xmf3Right = v[i]->GetRight();		//선형보간 가능..
 			m_xmf3Up = v[i]->GetUp();
 
 			prange = v[i]->GetPosition();
@@ -150,10 +156,10 @@ void CPlayer::Animate(float fElapsedTime)
 			++i;
 		}
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
-		//mang = XMVectorLerp(pang, vang, j);
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
-		//m_xmf3Look = Vector3::XMVectorToFloat3(mang);
+		//m_pCamera->SetView(m_xmf3Position, m_xmf3Right, m_xmf3Up);
+		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
 
 		//SetCameraOffset(m_xmf3Position);
 		if (i < 15)		//올라가기

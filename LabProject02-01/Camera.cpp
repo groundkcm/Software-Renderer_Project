@@ -44,6 +44,24 @@ void CCamera::GenerateViewMatrix()
 	m_xmFrustumView.Transform(m_xmFrustumWorld, XMLoadFloat4x4(&m_xmf4x4InverseView));
 }
 
+void CCamera::SetView(XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Right, XMFLOAT3& xmf3Up)
+{
+
+	
+	/*XMFLOAT3 temp;
+	m_xmf3Look = xmf3LookAt;
+
+	temp = Vector3::Add(xmf3Right, Vector3::Minus(m_xmf3Look));
+	m_xmf3Right = Vector3::Add(m_xmf3Look, temp);
+
+	XMVECTOR ltemp, rtemp, ctemp;
+	ltemp = XMVectorSet(m_xmf3Look.x, m_xmf3Look.y, m_xmf3Look.z, NULL);
+	rtemp = XMVectorSet(m_xmf3Right.x, m_xmf3Right.y, m_xmf3Right.z, NULL);
+	ctemp = XMVector3Cross(ltemp, rtemp);
+
+	m_xmf3Up = Vector3::XMVectorToFloat3(ctemp);*/
+}
+
 void CCamera::SetLookAt(XMFLOAT3& xmf3Position, XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up)
 {
 	m_xmf3Position = xmf3Position;

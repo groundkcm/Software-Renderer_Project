@@ -96,6 +96,13 @@ namespace Vector3
 		return(xmf3Result);
 	}
 
+	inline XMFLOAT3 Minus(XMFLOAT3& xmf3Vector)
+	{
+		XMFLOAT3 xmf3Result;
+		XMStoreFloat3(&xmf3Result, -XMLoadFloat3(&xmf3Vector));
+		return(xmf3Result);
+	}
+
 	inline float DotProduct(XMFLOAT3& xmf3Vector1, XMFLOAT3& xmf3Vector2)
 	{
 		XMFLOAT3 xmf3Result;
