@@ -54,16 +54,11 @@ public:
 
 #define BULLETS					50
 
-class CAirplanePlayer : public CPlayer
+class CRollerCosterPlayer : public CPlayer
 {
 public:
-	CAirplanePlayer();
-	virtual ~CAirplanePlayer();
-
-	float						m_fBulletEffectiveRange = 150.0f;
-	CBulletObject*				m_ppBullets[BULLETS];
-
-	void FireBullet(CGameObject* pLockedObject);
+	CRollerCosterPlayer();
+	virtual ~CRollerCosterPlayer();
 
 	virtual void OnUpdateTransform();
 	virtual void Animate(float fElapsedTime);

@@ -1,14 +1,7 @@
-﻿  Camera.cpp
-  GameFramework.cpp
-  GameObject.cpp
-  GraphicsPipeline.cpp
-  LabProject02-01.cpp
-  Mesh.cpp
-  Player.cpp
-  Scene.cpp
+﻿  GameFramework.cpp
   코드를 생성하고 있습니다.
-  3 of 411 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    7 functions had inline decision re-evaluated but remain unchanged
+  4 of 408 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   LabProject02-01.vcxproj -> C:\Project\Software Renderer_Project\x64\Release\LabProject02-01.exe

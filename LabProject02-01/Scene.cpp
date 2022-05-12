@@ -61,7 +61,7 @@ void CScene::BuildObjects()
 	}
 
 	for (int i = 10; i < 115; ++i) {
-		m_ppObjects[i] = new CExplosiveObject();
+		m_ppObjects[i] = new CCubeObject();
 		m_ppObjects[i]->SetMesh(pCubeMesh);
 		m_ppObjects[i]->Scale(1.5f, 0.1f, 1.5f);
 		m_ppObjects[i]->SetColor(RGB(255, 0, 0));
@@ -119,7 +119,7 @@ void CScene::BuildObjects()
 				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
 				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 1.5f, prange.z + 1.0f);
 			}
-		}		//회전 낙하 ->너무 내려감.
+		}		//회전 낙하
 		else if (i < 105) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f * (i - 95));
