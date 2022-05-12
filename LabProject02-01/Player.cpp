@@ -117,14 +117,17 @@ void CPlayer::Animate(float fElapsedTime)
 {
 	static int i{};
 	static float j{};
-	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
+	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, 0.0f) };
 	static XMFLOAT3 tangle{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
 	static XMVECTOR ptemp, vtemp, mtemp, pang, vang, mang;
 	XMFLOAT3 temp, atemp;
 	XMFLOAT4X4 rotatemat;
 	float ang{};
 
-	if (i > 104) aniswitch = false;
+	if (i > v.size() - 1) {
+		aniswitch = false;
+		i = 0;
+	}
 
 	if (aniswitch) {
 
@@ -155,22 +158,23 @@ void CPlayer::Animate(float fElapsedTime)
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
 		//SetCameraOffset(m_xmf3Position);
-		if (i < 15)		//¿Ã¶ó°¡±â
-			j += 0.03f;
-		else if (i < 25) //È¸Àü
-			j += 0.04f;
-		else if (i < 35) //³«ÇÏ 1
-			j += 0.15f;
-		else if (i < 45) //È¸Àü + »ó½Â
-			j += 0.1f;
-		else if (i < 55) //»ó½Â + Á¶±Ý ºñÆ´
-			j += 0.1f;
-		else if (i < 85) //È¸Àü ³«ÇÏ
-			j += 0.15f;
-		else if (i < 95) //È¸Àü
-			j += 0.1f;
-		else
-			j += 0.05f;
+		//if (i < 15)		//¿Ã¶ó°¡±â
+		//	j += 0.03f;
+		//else if (i < 25) //È¸Àü
+		//	j += 0.04f;
+		//else if (i < 35) //³«ÇÏ 1
+		//	j += 0.15f;
+		//else if (i < 45) //È¸Àü + »ó½Â
+		//	j += 0.1f;
+		//else if (i < 55) //»ó½Â + Á¶±Ý ºñÆ´
+		//	j += 0.1f;
+		//else if (i < 85) //È¸Àü ³«ÇÏ
+		//	j += 0.15f;
+		//else if (i < 95) //È¸Àü
+		//	j += 0.1f;
+		//else
+		//	j += 0.05f;
+		j += 0.2f;
 		if (j > 1.0f) j = 0.0f;
 	}
 
