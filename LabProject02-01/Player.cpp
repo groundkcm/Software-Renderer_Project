@@ -141,21 +141,20 @@ void CPlayer::Animate(float fElapsedTime)
 			pang = XMVectorSet(tangle.x, tangle.y, tangle.z, NULL);
 			vang = XMVectorSet(atemp.x, atemp.y, atemp.z, NULL);
 
-			mang = XMVector3Dot(pang, vang);
-			ang += XMVectorGetX(mang);
-			ang += XMVectorGetY(mang);
-			ang = XMVectorGetZ(mang);
-
-			rotatemat = Matrix4x4::RotationAxis(tangle, ang);
-			m_xmf4x4World = Matrix4x4::Multiply(rotatemat, m_xmf4x4World);
+			m_xmf3Look = atemp;
+			m_xmf3Right = v[i]->GetRight();
+			m_xmf3Up = v[i]->GetUp();
 
 			prange = v[i]->GetPosition();
 			tangle = v[i]->GetLook();
 			++i;
 		}
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
+		//mang = XMVectorLerp(pang, vang, j);
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
+		//m_xmf3Look = Vector3::XMVectorToFloat3(mang);
+
 		//SetCameraOffset(m_xmf3Position);
 		if (i < 15)		//올라가기
 			j += 0.05f;
