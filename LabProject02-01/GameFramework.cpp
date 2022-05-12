@@ -133,12 +133,6 @@ void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPA
 			else
 				m_pPlayer->aniswitch = true;
 			break;
-		case 0x72:
-			if (++checking % 2)
-				m_pPlayer->reset = false;
-			else
-				m_pPlayer->reset = true;
-			break;
 		default:
 			m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
 			break;

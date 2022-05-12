@@ -233,31 +233,36 @@ void CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam,
 
 void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
+
+	static int num1, num3, quarternum, resetnum;
 	switch (nMessageID)
 	{
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
 		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-		{
-			CExplosiveObject* pExplosiveObject = (CExplosiveObject*)m_ppObjects[int(wParam - '1')];
-			pExplosiveObject->m_bBlowingUp = true;
+			if (++num1 % 2)
+				m_pPlayer->character = false;
+			else
+				m_pPlayer->character = true;
 			break;
-		}
-		case '0':
-			for (int i = 0; i < m_nObjects; i++)
-			{
-				CExplosiveObject* pExplosiveObject = (CExplosiveObject*)m_ppObjects[i];
-				pExplosiveObject->m_bBlowingUp = true;
-			}
+		case '3':
+			if (++num3 % 2)
+				m_pPlayer->behind = false;
+			else
+				m_pPlayer->behind = true;
+			break;
+		case 'Q':
+			if (++quarternum % 2)
+				m_pPlayer->quarter = false;
+			else
+				m_pPlayer->quarter = true;
+			break;
+		case 'R':
+			if (++resetnum % 2)
+				m_pPlayer->reset = false;
+			else
+				m_pPlayer->reset = true;
 			break;
 		default:
 			break;

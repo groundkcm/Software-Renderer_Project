@@ -20,6 +20,9 @@ public:
 
 	bool						aniswitch = false;
 	bool						reset = false;
+	bool						quarter = false;
+	bool						character = false;
+	bool						behind = false;
 
 	float						m_fFriction = 125.0f;
 
