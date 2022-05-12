@@ -126,6 +126,8 @@ void CPlayer::Animate(float fElapsedTime)
 
 	if (reset) {
 		aniswitch = false;
+		character = false;
+		behind = false;
 		i = 0, j = 0;
 		m_xmf3Position = XMFLOAT3(-50.0f, 5.0f, -50.0f);
 	}
@@ -159,9 +161,14 @@ void CPlayer::Animate(float fElapsedTime)
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
 		//m_pCamera->SetView(m_xmf3Position, m_xmf3Right, m_xmf3Up);
-		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+		if (quarter)
+			m_pCamera->SetLookAt(XMFLOAT3(-100.0f, 100.0f, -100.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+		else if(character)
+			m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+		else if (behind)
+			m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
 
-		//SetCameraOffset(m_xmf3Position);
+
 		if (i < 15)		//올라가기
 			j += 0.05f;
 		else if (i < 25) //회전
