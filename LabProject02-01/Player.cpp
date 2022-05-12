@@ -118,55 +118,74 @@ void CPlayer::Animate(float fElapsedTime)
 	static int i;
 	static float j;
 	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -50.0f) };
-	static XMFLOAT3 tangle{ XMFLOAT3(-50.0f, 5.0f, -50.0f) };
-	static XMVECTOR ptemp, vtemp, mtemp, pang, vang, mang;
-	XMFLOAT3 temp, atemp;
-	XMFLOAT4X4 rotatemat;
-	float ang{};
+	static XMFLOAT3 tangle{ v[0]->GetLook() };
+	static XMFLOAT3 rangle{ v[0]->GetRight() };
+	static XMFLOAT3 uangle{ v[0]->GetUp() };
+	static XMVECTOR ptemp, vtemp, mtemp;
+	XMFLOAT3 temp;
 
 	if (reset) {
+		reset = false;
 		aniswitch = false;
+		quarter = false;
 		character = false;
 		behind = false;
 		i = 0, j = 0;
 		m_xmf3Position = XMFLOAT3(-50.0f, 5.0f, -50.0f);
 	}
+	if (quarter)
+		m_pCamera->SetLookAt(XMFLOAT3(-100.0f, 150.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(-100.0f, 200.0f, -100.0f));
+	else if (character)
+		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+	else if (behind)
+		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+	else
+		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(0.0f, 200.0f, 0.0f));
 
 	if (i > v.size() - 1) {
 		aniswitch = false;
+		quarter = false;
+		character = false;
+		behind = false;
 		i = 0;
 	}
-
+	static XMVECTOR plook, vlook, mlook, pright, vright, mright, pup, vup, mup;
+	XMFLOAT3 ltemp, rtemp, utemp;
 	if (aniswitch) {
 
 		if (j == 0.0f) {
 			temp = v[i]->GetPosition();
-			atemp = v[i]->GetLook();
+			ltemp = v[i]->GetLook();
+			rtemp = v[i]->GetRight();
+			utemp = v[i]->GetUp();
 
 			ptemp = XMVectorSet(prange.x, prange.y, prange.z, NULL);
 			vtemp = XMVectorSet(temp.x, temp.y, temp.z, NULL);
 
-			pang = XMVectorSet(tangle.x, tangle.y, tangle.z, NULL);
-			vang = XMVectorSet(atemp.x, atemp.y, atemp.z, NULL);
+			plook = XMVectorSet(tangle.x, tangle.y, tangle.z, NULL);
+			vlook = XMVectorSet(ltemp.x, ltemp.y, ltemp.z, NULL);
 
-			m_xmf3Look = atemp;
-			m_xmf3Right = v[i]->GetRight();		//선형보간 가능..
-			m_xmf3Up = v[i]->GetUp();
+			pright = XMVectorSet(rangle.x, rangle.y, rangle.z, NULL);
+			vright = XMVectorSet(rtemp.x, rtemp.y, rtemp.z, NULL);
+
+			pup = XMVectorSet(uangle.x, uangle.y, uangle.z, NULL);
+			vup = XMVectorSet(utemp.x, utemp.y, utemp.z, NULL);
 
 			prange = v[i]->GetPosition();
 			tangle = v[i]->GetLook();
+			rangle = v[i]->GetRight();
+			uangle = v[i]->GetUp();
 			++i;
 		}
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
+		mlook = XMVectorLerp(plook, vlook, j);
+		mright = XMVectorLerp(pright, vright, j);
+		mup = XMVectorLerp(pup, vup, j);
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
-		//m_pCamera->SetView(m_xmf3Position, m_xmf3Right, m_xmf3Up);
-		if (quarter)
-			m_pCamera->SetLookAt(XMFLOAT3(-100.0f, 100.0f, -100.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
-		else if(character)
-			m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
-		else if (behind)
-			m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+		m_xmf3Look = Vector3::XMVectorToFloat3(mlook);
+		m_xmf3Right = Vector3::XMVectorToFloat3(mright);
+		m_xmf3Up = Vector3::XMVectorToFloat3(mup);
 
 
 		if (i < 15)		//올라가기

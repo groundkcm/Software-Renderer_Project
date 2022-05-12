@@ -38,9 +38,8 @@ void CScene::BuildObjects()
 	v.reserve(RAILNUM);
 
 	std::uniform_int_distribution<int> iuid(0, 255);
-	std::uniform_int_distribution<int> choice(0, 1);
 	std::uniform_real_distribution<float> suid(0.1f, 0.5f);
-	std::uniform_real_distribution<float> puid(-90.0f, 90.0f);
+	std::uniform_real_distribution<float> puid(-80.0f, 80.0f);
 	std::uniform_real_distribution<float> muid(0.0f, 45.0f);
 	for (int i = 0; i < FIREWORKS; ++i) {
 		m_ppObjects[i] = new CExplosiveObject();
@@ -276,7 +275,7 @@ void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 void CScene::FireWorks()
 {
 	XMFLOAT3 pcheck;
-	std::uniform_real_distribution<float> uid(150.0f, 190.0f);
+	std::uniform_real_distribution<float> uid(50.0f, 110.0f);
 
 	for (int i{}; i < FIREWORKS; ++i) {
 		pcheck = m_ppObjects[i]->GetPosition();
