@@ -65,7 +65,7 @@ void CScene::BuildObjects()
 		m_ppObjects[i]->SetMesh(pCubeMesh);
 		m_ppObjects[i]->Scale(1.5f, 0.1f, 1.5f);
 		m_ppObjects[i]->SetColor(RGB(255, 0, 0));
-		static XMFLOAT3 tangle{};		//조금씩 이동
+		static XMFLOAT3 tangle{};
 		static XMFLOAT3 prange{};
 		if (i < 25) {
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);

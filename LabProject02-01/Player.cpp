@@ -118,8 +118,9 @@ void CPlayer::Animate(float fElapsedTime)
 	static int i{};
 	static float j{};
 	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
-	static XMVECTOR ptemp, vtemp, mtemp;
-	XMFLOAT3 temp{};
+	static XMFLOAT3 tangle{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
+	static XMVECTOR ptemp, vtemp, mtemp, pang, vang, mang;
+	XMFLOAT3 temp, atemp;
 
 	if (i > 104) aniswitch = false;
 
@@ -127,22 +128,39 @@ void CPlayer::Animate(float fElapsedTime)
 
 		if (j == 0.0f) {
 			temp = v[i]->GetPosition();
+			atemp = v[i]->GetLook();
+
 			ptemp = XMVectorSet(prange.x, prange.y, prange.z, NULL);
 			vtemp = XMVectorSet(temp.x, temp.y, temp.z, NULL);
 
+			pang = XMVectorSet(tangle.x, tangle.y, tangle.z, NULL);
+			vang = XMVectorSet(atemp.x, atemp.y, atemp.z, NULL);
+
 			prange = v[i]->GetPosition();
+			tangle = v[i]->GetLook();
 			++i;
 		}
-
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
+		mang = XMVectorLerp(pang, vang, j);
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
-		SetCameraOffset(m_xmf3Position);
-		/*temp = m_xmf3Position;
-
-		temp.y += 5.0f;
-		temp.z -= 10.0f;
-		SetCameraOffset(temp);*/
-		j += 0.1f;
+		m_xmf3Look = Vector3::XMVectorToFloat3(mang);
+		//SetCameraOffset(m_xmf3Position);
+		if (i < 15)		//¿Ã¶ó°¡±â
+			j += 0.03f;
+		else if (i < 25) //È¸Àü
+			j += 0.04f;
+		else if (i < 35) //³«ÇÏ 1
+			j += 0.15f;
+		else if (i < 45) //È¸Àü + »ó½Â
+			j += 0.1f;
+		else if (i < 55) //»ó½Â + Á¶±Ý ºñÆ´
+			j += 0.1f;
+		else if (i < 85) //È¸Àü ³«ÇÏ
+			j += 0.15f;
+		else if (i < 95) //È¸Àü
+			j += 0.1f;
+		else
+			j += 0.05f;
 		if (j > 1.0f) j = 0.0f;
 	}
 
