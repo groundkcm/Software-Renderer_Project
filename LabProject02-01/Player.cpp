@@ -115,10 +115,10 @@ extern std::vector<CGameObject*> v;
 
 void CPlayer::Animate(float fElapsedTime)
 {
-	static int i{};
-	static float j{};
-	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, 0.0f) };
-	static XMFLOAT3 tangle{ XMFLOAT3(-50.0f, 5.0f, -100.0f) };
+	static int i;
+	static float j;
+	static XMFLOAT3 prange{ XMFLOAT3(-50.0f, 5.0f, -50.0f) };
+	static XMFLOAT3 tangle{ XMFLOAT3(-50.0f, 5.0f, -50.0f) };
 	static XMVECTOR ptemp, vtemp, mtemp, pang, vang, mang;
 	XMFLOAT3 temp, atemp;
 	XMFLOAT4X4 rotatemat;
@@ -144,37 +144,51 @@ void CPlayer::Animate(float fElapsedTime)
 			mang = XMVector3Dot(pang, vang);
 			ang += XMVectorGetX(mang);
 			ang += XMVectorGetY(mang);
-			ang += XMVectorGetZ(mang);
+			ang = XMVectorGetZ(mang);
 
 			rotatemat = Matrix4x4::RotationAxis(tangle, ang);
 			m_xmf4x4World = Matrix4x4::Multiply(rotatemat, m_xmf4x4World);
 
 			prange = v[i]->GetPosition();
 			tangle = v[i]->GetLook();
-
 			++i;
 		}
 		mtemp = XMVectorLerp(ptemp, vtemp, j);
 
 		m_xmf3Position = Vector3::XMVectorToFloat3(mtemp);
 		//SetCameraOffset(m_xmf3Position);
-		//if (i < 15)		//¿Ã¶ó°¡±â
-		//	j += 0.03f;
-		//else if (i < 25) //È¸Àü
-		//	j += 0.04f;
-		//else if (i < 35) //³«ÇÏ 1
-		//	j += 0.15f;
-		//else if (i < 45) //È¸Àü + »ó½Â
-		//	j += 0.1f;
-		//else if (i < 55) //»ó½Â + Á¶±Ý ºñÆ´
-		//	j += 0.1f;
-		//else if (i < 85) //È¸Àü ³«ÇÏ
-		//	j += 0.15f;
-		//else if (i < 95) //È¸Àü
-		//	j += 0.1f;
-		//else
-		//	j += 0.05f;
-		j += 0.2f;
+		if (i < 15)		//¿Ã¶ó°¡±â
+			j += 0.05f;
+		else if (i < 25) //È¸Àü
+			j += 0.07f;
+		else if (i < 35) //³«ÇÏ 1
+			j += 0.15f;
+		else if (i < 45) //È¸Àü + »ó½Â
+			j += 0.15f;
+		else if (i < 55) //»ó½Â + Á¶±Ý ºñÆ´
+			j += 0.12f;
+		else if (i < 85) //È¸Àü ³«ÇÏ
+			j += 0.15f;
+		else if (i < 95) //È¸Àü
+			j += 0.15f;
+		else if (i < 105) //»ó½Â + Á¶±Ý ºñÆ´
+			j += 0.12f;
+		else if (i < 120) //³«ÇÏ
+			j += 0.15f;
+		else if (i < 130) //È¸Àü
+			j += 0.13f;
+		else if (i < 135) //³«ÇÏ
+			j += 0.15f;
+		else if (i < 145) //È¸Àü
+			j += 0.13f;
+		else if (i < 155) //È¸Àü
+			j += 0.12f;
+		else if (i < 157) //ÀÌµ¿
+			j += 0.1f;
+		else if (i < 167) //È¸Àü
+			j += 0.08f;
+		else			  //ÀÌµ¿
+			j += 0.07f;
 		if (j > 1.0f) j = 0.0f;
 	}
 

@@ -79,7 +79,7 @@ void CGameFramework::BuildObjects()
 	m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
 	m_pPlayer->SetCamera(pCamera);
 	m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 15.0f, -20.0f));
-	m_pPlayer->Move(-50.0f, 5.0f, 0.0f);
+	m_pPlayer->Move(-50.0f, 5.0f, -50.0f);
 
 	m_pScene = new CScene(m_pPlayer);
 	m_pScene->BuildObjects();

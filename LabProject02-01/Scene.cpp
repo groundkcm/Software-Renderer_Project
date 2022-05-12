@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "Scene.h"
 #include "GraphicsPipeline.h"
-#define RAILNUM 155
+#define RAILNUM 177
 #define	FIREWORKS 10
 #define SQUARNUM (RAILNUM + FIREWORKS)
 
@@ -61,7 +61,7 @@ void CScene::BuildObjects()
 		static XMFLOAT3 prange{};
 		if (i < 25) {		//올라가기
 			m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), -40.0f);
-			m_ppObjects[i]->SetPosition(-50.0f, prange.y + 4.0f, 0.0f + (i - 10) * 5.0f);
+			m_ppObjects[i]->SetPosition(-50.0f, prange.y + 4.0f, -50.0f + (i - 10) * 5.0f);
 		}
 		else if (i < 35) {		//회전
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f*(i-25));
@@ -103,7 +103,7 @@ void CScene::BuildObjects()
 				m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 30.0f);
 				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
 				if (i == 65)
-					m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 0.5f, prange.z + 1.0f);
+					m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y + 1.0f, prange.z + 1.0f);
 				else
 					m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y - 1.5f, prange.z + 1.0f);
 			}
@@ -182,23 +182,24 @@ void CScene::BuildObjects()
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 0.0f, 1.0f), -20.0f + 2.0f * (i - 155));
 			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f * (i - 155));
 			if (i < 160)
-				m_ppObjects[i]->SetPosition(prange.x - 3.0f, prange.y, prange.z - 0.5f);
+				m_ppObjects[i]->SetPosition(prange.x - 0.5f, prange.y, prange.z - 3.0f);
 			else
-				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y, prange.z - 3.0f);
+				m_ppObjects[i]->SetPosition(prange.x - 3.0f, prange.y, prange.z - 2.0f);
+		}
+		else if (i < 167) {		//이동
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
+			m_ppObjects[i]->SetPosition(prange.x - 5.0f, prange.y, prange.z);
+		}
+		else if (i < 177) {		//회전
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), -90.0f);
+			m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 9.0f * (i - 165));
+			if (i < 172)
+				m_ppObjects[i]->SetPosition(prange.x - 3.0f, prange.y, prange.z + 0.5f);
+			else
+				m_ppObjects[i]->SetPosition(prange.x - 2.0f, prange.y, prange.z + 3.0f);
 		}
 		else {
-		int itemp;
-			if (prange.y < 3.0f) {
-				if (!first) 
-					itemp = i;
-				first = true;
-				
-			}
-			else {
-				m_ppObjects[i]->Rotate(XMFLOAT3(1.0f, 0.0f, 0.0f), 20.0f);
-				m_ppObjects[i]->Rotate(XMFLOAT3(0.0f, 1.0f, 0.0f), 180.0f);
-				m_ppObjects[i]->SetPosition(prange.x, prange.y - 2.0f, prange.z - 3.0f);
-			}
+			m_ppObjects[i]->SetPosition(prange.x, prange.y, prange.z + 2.0f);
 		}
 		v.push_back(m_ppObjects[i]);
 		prange = m_ppObjects[i]->GetPosition();
