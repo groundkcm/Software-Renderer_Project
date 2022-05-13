@@ -135,7 +135,6 @@ void CPlayer::Animate(float fElapsedTime)
 		m_xmf3Look = v[0]->GetLook();
 		m_xmf3Right = v[0]->GetRight();
 		m_xmf3Up = v[0]->GetUp();
-		m_pCamera->SetView(m_xmf3Position);
 	}
 	if (quarter)
 		m_pCamera->SetLookAt(XMFLOAT3(-100.0f, 150.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(-100.0f, 200.0f, -100.0f));
@@ -146,7 +145,7 @@ void CPlayer::Animate(float fElapsedTime)
 	else
 		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(0.0f, 200.0f, 0.0f));
 
-	if (i > v.size() - 1) {
+	if (i >= v.size() - 1) {
 		aniswitch = false;
 		quarter = false;
 		character = false;
