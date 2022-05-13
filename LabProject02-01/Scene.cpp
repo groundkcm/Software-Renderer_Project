@@ -40,7 +40,7 @@ void CScene::BuildObjects()
 	std::uniform_int_distribution<int> iuid(0, 255);
 	std::uniform_real_distribution<float> suid(0.1f, 0.5f);
 	std::uniform_real_distribution<float> puid(-80.0f, 80.0f);
-	std::uniform_real_distribution<float> muid(0.0f, 45.0f);
+	std::uniform_real_distribution<float> muid(10.0f, 30.0f);
 	for (int i = 0; i < FIREWORKS; ++i) {
 		m_ppObjects[i] = new CExplosiveObject();
 		m_ppObjects[i]->SetMesh(pCubeMesh);
@@ -51,7 +51,6 @@ void CScene::BuildObjects()
 		m_ppObjects[i]->SetMovingSpeed(muid(dre));
 	}
 
-	bool first = false;
 	for (int i = FIREWORKS; i < SQUARNUM; ++i) {
 		m_ppObjects[i] = new CCubeObject();
 		m_ppObjects[i]->SetMesh(pCubeMesh);
@@ -242,20 +241,31 @@ void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 		case '1':
 			if (++num1 % 2)
 				m_pPlayer->character = false;
-			else
+			else {
 				m_pPlayer->character = true;
+				m_pPlayer->behind = false;
+				m_pPlayer->quarter = false;
+			}
 			break;
 		case '3':
 			if (++num3 % 2)
 				m_pPlayer->behind = false;
-			else
+			else {
 				m_pPlayer->behind = true;
+				m_pPlayer->character = false;
+				m_pPlayer->quarter = false;
+				m_pPlayer->reset = false;
+			}
 			break;
 		case 'Q':
 			if (++quarternum % 2)
 				m_pPlayer->quarter = false;
-			else
+			else {
 				m_pPlayer->quarter = true;
+				m_pPlayer->character = false;
+				m_pPlayer->reset = false; 
+				m_pPlayer->behind = false;
+			}
 			break;
 		case 'R':
 			if (++resetnum % 2)
@@ -275,7 +285,7 @@ void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wPar
 void CScene::FireWorks()
 {
 	XMFLOAT3 pcheck;
-	std::uniform_real_distribution<float> uid(50.0f, 110.0f);
+	std::uniform_real_distribution<float> uid(70.0f, 100.0f);
 
 	for (int i{}; i < FIREWORKS; ++i) {
 		pcheck = m_ppObjects[i]->GetPosition();

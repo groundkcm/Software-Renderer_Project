@@ -44,22 +44,20 @@ void CCamera::GenerateViewMatrix()
 	m_xmFrustumView.Transform(m_xmFrustumWorld, XMLoadFloat4x4(&m_xmf4x4InverseView));
 }
 
-void CCamera::SetView(XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Right, XMFLOAT3& xmf3Up)
+void CCamera::SetView(XMFLOAT3& xmf3LookAt)
 {
-
-	
-	/*XMFLOAT3 temp;
+	/*XMVECTOR temp, wup;
 	m_xmf3Look = xmf3LookAt;
 
-	temp = Vector3::Add(xmf3Right, Vector3::Minus(m_xmf3Look));
-	m_xmf3Right = Vector3::Add(m_xmf3Look, temp);
+	temp = XMVectorSubtract(XMVectorSet(xmf3LookAt.x, xmf3LookAt.y, xmf3LookAt.z, NULL), XMVectorSet(m_xmf3Position.x, m_xmf3Position.y, m_xmf3Position.z, NULL));
+	temp = XMVector3Normalize(temp);
+	wup = XMVectorSet(0, 1, 0, NULL);
+	m_xmf3Right = Vector3::XMVectorToFloat3(XMVector3Cross(temp, wup));
 
-	XMVECTOR ltemp, rtemp, ctemp;
-	ltemp = XMVectorSet(m_xmf3Look.x, m_xmf3Look.y, m_xmf3Look.z, NULL);
-	rtemp = XMVectorSet(m_xmf3Right.x, m_xmf3Right.y, m_xmf3Right.z, NULL);
-	ctemp = XMVector3Cross(ltemp, rtemp);
-
-	m_xmf3Up = Vector3::XMVectorToFloat3(ctemp);*/
+	m_xmf3Up = Vector3::XMVectorToFloat3(XMVector3Cross(temp, XMVector3Cross(temp, wup)));*/
+	/*m_xmf3Look = xmf3LookAt;
+	m_xmf3Right = XMFLOAT3(-50.0f, 5.0f, -50.0f);
+	m_xmf3Up = XMFLOAT3(0,1,0);*/
 }
 
 void CCamera::SetLookAt(XMFLOAT3& xmf3Position, XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up)

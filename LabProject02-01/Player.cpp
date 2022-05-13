@@ -132,11 +132,15 @@ void CPlayer::Animate(float fElapsedTime)
 		behind = false;
 		i = 0, j = 0;
 		m_xmf3Position = XMFLOAT3(-50.0f, 5.0f, -50.0f);
+		m_xmf3Look = v[0]->GetLook();
+		m_xmf3Right = v[0]->GetRight();
+		m_xmf3Up = v[0]->GetUp();
+		m_pCamera->SetView(m_xmf3Position);
 	}
 	if (quarter)
 		m_pCamera->SetLookAt(XMFLOAT3(-100.0f, 150.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(-100.0f, 200.0f, -100.0f));
 	else if (character)
-		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
+		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x, m_xmf3Position.y, m_xmf3Position.z + 4.0f), v[i]->GetLook(), v[i]->GetUp());
 	else if (behind)
 		m_pCamera->SetLookAt(XMFLOAT3(m_xmf3Position.x - 10.0f, m_xmf3Position.y + 10.0f, m_xmf3Position.z - 20.0f), m_xmf3Position, XMFLOAT3(-100.0f, 200.0f, -100.0f));
 	else
@@ -186,6 +190,8 @@ void CPlayer::Animate(float fElapsedTime)
 		m_xmf3Look = Vector3::XMVectorToFloat3(mlook);
 		m_xmf3Right = Vector3::XMVectorToFloat3(mright);
 		m_xmf3Up = Vector3::XMVectorToFloat3(mup);
+		//m_pCamera->SetView(m_xmf3Position);
+		//LookAt(m_xmf3Position, m_xmf3Up);
 
 
 		if (i < 15)		//올라가기
